@@ -58,13 +58,13 @@ class MyProgram:
         vbox.pack_start(bottom_area)
         self.app_window.add(vbox)
 
-        image = gtk.Image()
+        self.image = gtk.Image()
         pixbuf = gtk.gdk.pixbuf_new_from_file("resource/unknown.jpg")
-        scaled_buf = pixbuf.scale_simple(300,350,gtk.gdk.INTERP_BILINEAR)
-        image.set_from_pixbuf(scaled_buf)
-        image.show()
+        scaled_buf = pixbuf.scale_simple(472,709,gtk.gdk.INTERP_BILINEAR)
+        self.image.set_from_pixbuf(scaled_buf)
+        self.image.show()
 
-        self.student_pic.add(image)
+        self.student_pic.add(self.image)
 
         self.button_search.set_flags(gtk.CAN_DEFAULT)
         self.button_search.grab_default()
@@ -79,10 +79,9 @@ class MyProgram:
         #intersting stuff goes here
         #grab sid
         sid = self.entry.get_text()
-
         #do a lookup for the name
         if int(sid) < 100:
-            name = 'Soup For You!'
+            name = 'Pizza For You!'
         else:
             name = 'No Soup For You!'
 
@@ -95,6 +94,18 @@ class MyProgram:
             #self.app_window.modify_bg(gtk.STATE_NORMAL, self.red)
         self.label.set_markup(result)
         self.label.show()
+
+        #load pictures
+        try:
+            pixbuf = gtk.gdk.pixbuf_new_from_file("resource/"+sid+".JPG")
+            scaled_buf = pixbuf.scale_simple(472,709,gtk.gdk.INTERP_BILINEAR)
+            self.image.set_from_pixbuf(scaled_buf)
+        except:
+            pixbuf = gtk.gdk.pixbuf_new_from_file("resource/unknown.jpg")
+            scaled_buf = pixbuf.scale_simple(472,709,gtk.gdk.INTERP_BILINEAR)
+            self.image.set_from_pixbuf(scaled_buf)
+
+
 
         #clear entry box and reset focus
         self.entry.set_text('')
