@@ -4,12 +4,22 @@
 
 import pygtk
 import gtk
+import fileinput
 
 class MyProgram:
-    def button_clicked(self, widget, data=None):
-        print "button %s clicked" % data
-
     def __init__(self):
+
+        self.students = {}
+        try:
+            f = open('students.csv')
+        except:
+            print "can't open file"
+            
+        for line in f:
+            line = line.strip()
+            info = line.split(',')
+            sid = info[0]
+            self.students[sid] = info[1]
 
         #create a new window
         self.app_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -79,18 +89,20 @@ class MyProgram:
         #intersting stuff goes here
         #grab sid
         sid = self.entry.get_text()
+
         #do a lookup for the name
-        if int(sid) < 100:
-            name = 'Pizza For You!'
-        else:
-            name = 'No Soup For You!'
+        try:
+            name = self.students[sid]
+        except KeyError:
+            name = "NA"
 
         #display the result
         #successful result
         result = '<span background="green"><span size="128000">'+sid+'</span>\n<span size="64000">'+name+'</span></span>'
 
-        if name == 'No Soup For You!':
-            result = '<span background="red"><span size="128000">'+sid+'</span>\n<span size="64000">'+name+'</span></span>'
+        if name == 'NA':
+            result = '<span background="red"><span size="128000">'+sid+'</span>\n<span size="64000">No Lunch!</span></span>'
+            sid = name
             #self.app_window.modify_bg(gtk.STATE_NORMAL, self.red)
         self.label.set_markup(result)
         self.label.show()
@@ -101,7 +113,7 @@ class MyProgram:
             scaled_buf = pixbuf.scale_simple(472,709,gtk.gdk.INTERP_BILINEAR)
             self.image.set_from_pixbuf(scaled_buf)
         except:
-            pixbuf = gtk.gdk.pixbuf_new_from_file("resource/unknown.jpg")
+            pixbuf = gtk.gdk.pixbuf_new_from_file("resource/OK.JPG")
             scaled_buf = pixbuf.scale_simple(472,709,gtk.gdk.INTERP_BILINEAR)
             self.image.set_from_pixbuf(scaled_buf)
 
