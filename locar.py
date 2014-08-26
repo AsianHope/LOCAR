@@ -44,8 +44,8 @@ class MyProgram:
         spacer1 = gtk.EventBox()
         spacer2 = gtk.EventBox()
 
-        self.label=gtk.Label("Enter a Student ID to begin:")
-        init = '<span background="gray"><span size="128000">XXX</span>\n<span size="64000">Enter a SID to begin!</span></span>'
+        self.label=gtk.Label("Please scan a card")
+        init = '<span background="gray"><span size="128000">XXX</span>\n<span size="64000">Please scan a card</span></span>'
         self.label.set_markup(init)
         self.student_id.add(self.label)
 
@@ -69,7 +69,7 @@ class MyProgram:
         self.app_window.add(vbox)
 
         self.image = gtk.Image()
-        pixbuf = gtk.gdk.pixbuf_new_from_file("resource/unknown.jpg")
+        pixbuf = gtk.gdk.pixbuf_new_from_file("resource/logo.png")
         scaled_buf = pixbuf.scale_simple(472,709,gtk.gdk.INTERP_BILINEAR)
         self.image.set_from_pixbuf(scaled_buf)
         self.image.show()
