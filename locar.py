@@ -5,6 +5,7 @@
 import pygtk
 import gtk
 import fileinput
+import errno, sys
 
 class MyProgram:
     def __init__(self):
@@ -13,8 +14,11 @@ class MyProgram:
         try:
             f = open('students.csv')
         except:
-            print "can't open file"
-            
+           parent = None
+           md = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, 
+                    gtk.BUTTONS_CLOSE, "Can't open file!")
+           md.run()
+           sys.exit(1)
         for line in f:
             line = line.strip()
             info = line.split(',')
